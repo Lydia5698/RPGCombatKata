@@ -21,7 +21,8 @@ public class CombatTests {
     public void takeDamage(){
         Player hans = new Player();
         Player ute = new Player();
-        hans.makeDamage(hans,ute, 100);
+        Attack attack = new Attack();
+        attack.makeDamage(hans,ute, 100);
         assertThat(ute.getHealth(), is(900));
         assertThat(hans.getHealth(), is(1000));
     }
@@ -30,7 +31,8 @@ public class CombatTests {
     public void takeTooMuchDamageAndDie(){
         Player hans = new Player();
         Player ute = new Player();
-        hans.makeDamage(hans, ute, 1000);
+        Attack attack = new Attack();
+        attack.makeDamage(hans, ute, 1000);
         assertThat(ute.getAlive(), is(false));
         assertThat(hans.getAlive(), is(true));
     }
@@ -38,7 +40,18 @@ public class CombatTests {
     @Test
     public void playerCannotDamageItself(){
         Player player = new Player();
-        player.makeDamage(player,player, 100);
+        Attack attack = new Attack();
+        attack.makeDamage(player,player, 100);
         assertThat(player.getHealth(), is(1000));
+    }
+
+    @Test
+    public void playerHealsHimself(){
+        Player hans = new Player();
+        Player ute = new Player();
+        Attack attack = new Attack();
+        // attack.makeDamage(hans, ute, 100);
+        //attack.heal(ute,ute, 100);
+        assertThat(ute.getHealth(), is(1000));
     }
 }
