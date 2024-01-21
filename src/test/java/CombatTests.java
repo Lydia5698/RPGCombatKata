@@ -32,7 +32,7 @@ public class CombatTests {
         Player hans = new Player();
         Player ute = new Player();
         Attack attack = new Attack();
-        attack.makeDamage(hans, ute, 1000);
+        attack.makeDamage(hans, ute, 1100);
         assertThat(ute.getAlive(), is(false));
         assertThat(hans.getAlive(), is(true));
     }
@@ -50,8 +50,29 @@ public class CombatTests {
         Player hans = new Player();
         Player ute = new Player();
         Attack attack = new Attack();
-        // attack.makeDamage(hans, ute, 100);
-        //attack.heal(ute,ute, 100);
+        attack.makeDamage(hans, ute, 100);
+        attack.heal(ute,ute, 200);
         assertThat(ute.getHealth(), is(1000));
+    }
+
+    @Test
+    public void playerCannotHealAnotherPlayer(){
+        Player hans = new Player();
+        Player ute = new Player();
+        Attack attack = new Attack();
+        attack.makeDamage(hans, ute, 100);
+        attack.heal(hans,ute, 200);
+        assertThat(ute.getHealth(), is(900));
+    }
+
+    @Test
+    public void playerHealsDeadPlayer(){
+        Player hans = new Player();
+        Player ute = new Player();
+        Attack attack = new Attack();
+        attack.makeDamage(hans, ute, 1100);
+        assertThat(ute.getAlive(), is(false));
+        attack.heal(ute,ute, 200);
+        assertThat(ute.getHealth(), is(0));
     }
 }
